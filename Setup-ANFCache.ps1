@@ -18,9 +18,13 @@
     - Az.NetAppFiles module version 1.3.0 or higher
     - Az.Accounts module
     - Appropriate Azure permissions
+    - Manual QoS Requirement (ANF Cache Volumes)
+    -   Ensure the ANF capacity pool is configured for Manual QoS
+    -   Required when specifying explicit volume throughput
+    -   Automatic QoS mode does not support per-volume throughput control as utilised in this script, edit accordingly.
     
-.AUTHOR
-    Updated: 2026
+.AUTHOR Dean Miller 
+    Updated: June 2026
 #>
 
 # ===========================================================================================
