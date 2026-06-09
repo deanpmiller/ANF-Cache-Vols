@@ -55,7 +55,8 @@ Poll the cache status until it reaches `ClusterPeeringOfferSent` state this will
 Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
   -PoolName $PoolName | Select-Object CacheState
 ```
-
+[!IMPORTANT]
+> You have 30 minutes after the cacheState transitions to ClusterPeeringOfferSent to execute the clusterPeeringCommand
 ---
 
 ### Step 3: Establish Cluster Peering
