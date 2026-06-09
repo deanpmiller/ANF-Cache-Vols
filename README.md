@@ -14,6 +14,7 @@ The example utilises the minimum ANF deployment size of 1 TiB, is configured f
 - [Understand Azure NetApp Files cache volumes](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-volumes)
 - [Module: Az.NetAppFiles (New-AzNetAppFilesCache)](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-16.0.0)
 - [Resizing ANF Cache volumes, and guidance regarding intial deployment size](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-volumes-resize-guidelines)
+- [Requirements and considerations for Azure NetApp Files cache volumes](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements)
 
 ## Prerequisites
 
@@ -26,7 +27,9 @@ The example utilises the minimum ANF deployment size of 1 TiB, is configured f
 - SSH access to on-premises cluster
 - The source cluster must be running **ONTAP 9.15.1** or later version.
 - The example utilises the minimum ANF deployment size of 1 TiB and is configured for Manual QoS.
-- Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload. For more informatoion regarding 
+- Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload. For more informatoion regarding
+  
+For further requirements and considerations, including expected **RTT latency and required firewall ports**, please refer to the Requirements and considerations link above.
 
 ### Module Installation
 
