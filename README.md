@@ -24,3 +24,34 @@ This PowerShell script automates the setup and configuration of Azure NetApp Fil
 Install-Module Az -Force
 Install-Module Az.NetAppFiles -Force
 Get-Module -ListAvailable Az.NetAppFiles
+
+# Azure Authentication
+$TenantId              = "# ADD YOUR TENANT ID"
+$SubscriptionId        = "# ADD YOUR SUBSCRIPTION ID"
+
+# Azure Resources
+$ResourceGroupName     = "# ADD YOUR RESOURCE GROUP NAME"
+$AccountName           = "# ADD YOUR NETAPP ACCOUNT NAME"
+$PoolName              = "# ADD YOUR CAPACITY POOL NAME"
+$Location              = "# ADD YOUR AZURE REGION (e.g., westeurope)"
+
+# Cache Configuration
+$CacheName             = "cache01"
+$Size                  = (50 * 1024 * 1024 * 1024)  # 50 GiB (minimum allowed)
+$Zone                  = "1"
+$ProtocolType          = "SMB"  # SMB or NFS supported
+$WriteBack             = "Enabled"
+$FilePath              = "# ADD YOUR CACHE FILE PATH"
+
+# On-Premises Cluster Details
+$OriginPeerAddress     = "# ADD ON-PREMISES CLUSTER IP"
+$OriginPeerClusterName = "# ADD ON-PREMISES CLUSTER NAME"
+$OriginPeerVserverName = "# ADD ON-PREMISES VSERVER NAME"
+$OriginPeerVolumeName  = "# ADD ON-PREMISES VOLUME NAME"
+
+# Network Configuration
+$CacheSubnetResourceId   = "/subscriptions/$SubscriptionId/resourceGroups/# ADD RESOURCE GROUP/providers/Microsoft.Network/virtualNetworks/# ADD VNET NAME/subnets/# ADD SUBNET NAME"
+$PeeringSubnetResourceId = "/subscriptions/$SubscriptionId/resourceGroups/# ADD RESOURCE GROUP/providers/Microsoft.Network/virtualNetworks/# ADD VNET NAME/subnets/# ADD SUBNET NAME"
+
+# Encryption
+$EncryptionKeySource   = "Microsoft.NetApp"
