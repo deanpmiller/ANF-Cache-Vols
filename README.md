@@ -6,11 +6,14 @@ THIS CODE IS PROVIDED AS-IS WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, IN
 
 ## Overview
 
-This PowerShell script automates the setup and configuration of Azure NetApp Files (ANF) FlexCache with cluster peering to an on-premises NetApp cluster. The script enables write-back caching using the SMB protocol and establishes peering relationships between Azure and on-premises infrastructure.
+This PowerShell script automates the setup and configuration of Azure NetApp Files (ANF) FlexCache with cluster peering to an on-premises NetApp cluster. The script enables write-back caching using the SMB protocol and establishes peering relationships between Azure and on-premises infrastructure. 
+
+The example utilises the minimum ANF deployment size of 1 TiB, is configured for Manual QoS, and uses the Standard service level, which delivers up to 16 MiB/s per TiB provisioned.
 
 ## Official MS Learn Documentation:
 - [Understand Azure NetApp Files cache volumes](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-volumes)
 - [Module: Az.NetAppFiles (New-AzNetAppFilesCache)](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-16.0.0)
+- [Resizing ANF Cache volumes, and guidance regarding intial deployment size](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-volumes-resize-guidelines)
 
 ## Prerequisites
 
@@ -22,6 +25,8 @@ This PowerShell script automates the setup and configuration of Azure NetApp Fil
 - Network connectivity to on-premises cluster
 - SSH access to on-premises cluster
 - The source cluster must be running **ONTAP 9.15.1** or later version.
+- The example utilises the minimum ANF deployment size of 1 TiB and is configured for Manual QoS.
+- Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload. For more informatoion regarding 
 
 ### Module Installation
 
