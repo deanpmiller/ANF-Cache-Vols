@@ -16,6 +16,16 @@ The example utilises the minimum ANF deployment size of 1 TiB, is configured f
 - [Resizing ANF Cache volumes, and guidance regarding intial deployment size](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-volumes-resize-guidelines)
 - [Requirements and considerations for Azure NetApp Files cache volumes](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements)
 
+
+
+## Table of Contents
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Deployment Options](#deployment-options)
+- [PowerShell Example](#powershell-example)
+- [Important Considerations](#important-considerations)
+- [References](#references)
+
 ## Prerequisites
 
 - PowerShell 5.0 or higher
