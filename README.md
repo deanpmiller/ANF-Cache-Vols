@@ -54,6 +54,9 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable :
 - **Protocol:** SMB with write-back caching enabled
 - **Encryption:** Microsoft-managed keys
 
+[!WARNING]
+> Write-back mode introduces asynchronous persistence to the origin.
+
 ```powershell
 New-AnfCache @params
 ```
