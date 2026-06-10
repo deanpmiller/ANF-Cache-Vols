@@ -59,7 +59,7 @@ Before running the script, update the configuration variables in `Setup-ANFCache
 ## Script Workflow
 
 ### Step 1: Create Cache
-Creates an ANF FlexCache volume using parameters defined in a hashtable :
+Creates an ANF FlexCache volume using parameters defined in a hashtable. My example is configuired with the following properties:
 
 - **Capacity:** 100 GiB minimum
 - **Throughput** 16MiB/s
