@@ -18,7 +18,6 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 - [Physical and logical availability zones](https://learn.microsoft.com/en-gb/azure/reliability/availability-zones-overview?tabs=azure-powershell#physical-and-logical-availability-zones)
 
 
-
 ## Table of Contents
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
@@ -81,7 +80,7 @@ Poll the cache status until it reaches `ClusterPeeringOfferSent` state this will
 
 ```powershell
 Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
-  -PoolName $PoolName | Select-Object CacheState
+  -PoolName $PoolName -name $CacheName  | Select-Object CacheState
 ```
 [!IMPORTANT]
 > You have 30 minutes after the cacheState transitions to ClusterPeeringOfferSent to execute the clusterPeeringCommand.
@@ -179,20 +178,26 @@ Get-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
   -AccountName "$AccountName" -PoolName "$PoolName" -Name "$CacheName" |ConvertTo-JSON
 
 # Remove cache (if needed)
+In the first instance, disable **writeback** if enabled:
+Update-AnfCache -ResourceGroupName $ResourceGroupName '
+-AccountName $AccountName -PoolName $PoolName -name "$CacheName" -WriteBack Disabled
+
+# You can then proceed to delete the ANFcache volume. 
 Remove-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
   -AccountName "$AccountName" -PoolName "$PoolName" -Name "$CacheName"
+> **Note:** After deleting the ANF cache volume, the cluster peering remains in place
 
 # Retrieve peering commands
-Get-AnfCachePeeringPassphrase -ResourceGroupName "rg-deanm" `
-  -CacheName cache01 -AccountName "dm-west-europe" -PoolName "Flexcache"
+Get-AnfCachePeeringPassphrase -ResourceGroupName "$ResourceGroupName" `
+  -CacheName cache01 -AccountName "$AccountName" -PoolName "Flexcache"
 
 # Update throughput of a cache volume
 Update-AnfCache -ResourceGroupName $ResourceGroupName '
-  -AccountName $AccountName -PoolName $PoolName -ThroughputMibps 2 -Name cache01   
+  -AccountName $AccountName -PoolName $PoolName -ThroughputMibps 2 -Name "$CacheName"  
 
 # Update the size of a cache volume
 Update-AnfCache -ResourceGroupName $ResourceGroupName '
-  -AccountName $AccountName -PoolName $PoolName -Size (200 * 1024 * 1024 * 1024) -Name cache01
+  -AccountName $AccountName -PoolName $PoolName -Size (200 * 1024 * 1024 * 1024) -Name "$CacheName"
 
 ```
 
