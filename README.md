@@ -61,7 +61,8 @@ Before running the script, update the configuration variables in `Setup-ANFCache
 ### Step 1: Create Cache
 Creates an ANF FlexCache volume using parameters defined in a hashtable :
 
-- **Capacity:** 50 GiB minimum
+- **Capacity:** 100 GiB minimum
+- **Throughput** 16MiB/s
 - **Protocol:** SMB with **write-back caching enabled**
 - **Encryption:** Microsoft-managed keys
 
