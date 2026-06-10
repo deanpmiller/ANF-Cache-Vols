@@ -67,7 +67,7 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable. My exam
 - **Availability Zone** 1 - Physical zones are real datacentres; logical zones are the labels in your subscription. Use the same physical zone across subscriptions for **compute and storage.** For more info refer to the [doc link above](#official-ms-learn-documentation)
 
 ```powershell
-New-AnfCache @params
+New-AzNetAppFilesCache @params
 ```
 [!WARNING]
 > Write-back mode introduces asynchronous persistence to the origin. The external origin **must** also remain less than 80% full.
