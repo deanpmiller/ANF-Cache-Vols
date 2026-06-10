@@ -61,7 +61,7 @@ Before running the script, update the configuration variables in `Setup-ANFCache
 Creates an ANF FlexCache volume using parameters defined in a hashtable :
 
 - **Capacity:** 50 GiB minimum
-- **Protocol:** SMB with write-back caching enabled
+- **Protocol:** SMB with **write-back caching enabled**
 - **Encryption:** Microsoft-managed keys
 
 [!WARNING]
