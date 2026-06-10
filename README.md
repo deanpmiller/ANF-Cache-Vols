@@ -43,6 +43,14 @@ The example utilises the minimum ANF deployment size of 1 TiB, is configured f
 For further requirements and considerations, including expected **RTT latency and required firewall ports**, please refer to the Requirements and considerations link above.
 
 
+| Requirement | Details |
+|------------|--------|
+| PowerShell | Version 5.0 or higher |
+| Azure CLI / PowerShell | Azure CLI or Az PowerShell modules installed |
+| Az.NetAppFiles Module | Version 1.3.0 or higher (required for cache cmdlets) |
+| Az.Accounts Module | Version 5.5.0 or higher (authentication dependency) |
+| Azure Subscription | Must have appropriate permissions |
+
 
 ### Module Installation
 
