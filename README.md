@@ -36,7 +36,7 @@ The example utilises the minimum ANF deployment size of 1 TiB, is configured f
 - Network connectivity to on-premises cluster
 - SSH access to on-premises cluster
 - The source cluster must be running **ONTAP 9.15.1** or later version and ONTAP **9.15.1P5** to utilise Writeback.
-- In ONTAP versions before 9.18.1, If an SVM DR relationship is broken, FlexCache must be manually recreated with a new origin volume. From ONTAP 9.18.1 onwards:During SVM failover, FlexCache automatically redirects to the DR site origin- **No manual recovery steps required **
+- In ONTAP versions before 9.18.1, If an SVM DR relationship is broken, FlexCache must be manually recreated with a new origin volume. From ONTAP 9.18.1 onwards:During SVM failover, FlexCache automatically redirects to the DR site origin- **No manual recovery steps required**
 - The example utilises the minimum ANF deployment size of 1 TiB and is configured for Manual QoS.
 - Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload.
   
