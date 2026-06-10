@@ -8,13 +8,14 @@ THIS CODE IS PROVIDED AS-IS WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, IN
 
 This PowerShell script automates the setup and configuration of Azure NetApp Files (ANF) FlexCache with cluster peering to an on-premises NetApp cluster. The script enables write-back caching using the SMB protocol and establishes peering relationships between Azure and on-premises infrastructure. 
 
-The example utilises the minimum ANF deployment size of 1 TiB, is configured for Manual QoS, and uses the Standard service level, which delivers up to 16 MiB/s per TiB provisioned.
+The example utilises the minimum ANF deployment capacity pool of 1 TiB, is configured for Manual QoS, and utilizes the Standard service level, which delivers up to 16 MiB/s per TiB provisioned.
 
 ## Official MS Learn Documentation:
 - [Understand Azure NetApp Files cache volumes](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-volumes)
 - [Module: Az.NetAppFiles (New-AzNetAppFilesCache)](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-16.0.0)
 - [Resizing ANF Cache volumes, and guidance regarding intial deployment size](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-volumes-resize-guidelines)
 - [Requirements and considerations for Azure NetApp Files cache volumes](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements)
+- [Physical and logical availability zones](https://learn.microsoft.com/en-gb/azure/reliability/availability-zones-overview?tabs=azure-powershell#physical-and-logical-availability-zones)
 
 
 
@@ -37,7 +38,6 @@ The example utilises the minimum ANF deployment size of 1 TiB, is configured f
 - SSH access to on-premises OnTap cluster
 - The source cluster must be running **ONTAP 9.15.1** or later version and ONTAP **9.15.1P5** to utilise Writeback.
 - In ONTAP versions before 9.18.1, If an SVM DR relationship is broken, FlexCache must be manually recreated with a new origin volume. From ONTAP 9.18.1 onwards:During SVM failover, FlexCache automatically redirects to the DR site origin- **No manual recovery steps required**
-- The example utilises the minimum ANF deployment size of 1 TiB and is configured for Manual QoS.
 - Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload.
   
 For further requirements and considerations, including expected **RTT latency and required firewall ports**, please refer to the Requirements and considerations link above.
@@ -65,6 +65,7 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable :
 - **Throughput** 16MiB/s
 - **Protocol:** SMB with **write-back caching enabled**
 - **Encryption:** Microsoft-managed keys
+- **Availability Zone** 1 (Physical zones are real datacentres; logical zones are the labels in your subscription. Use the same physical zone across subscriptions for compute and storage. For more info refer to the [doc link above]((#official-ms-learn-documentation).)
 
 ```powershell
 New-AnfCache @params
