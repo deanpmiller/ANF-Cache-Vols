@@ -42,6 +42,8 @@ The example utilises the minimum ANF deployment size of 1 TiB, is configured f
   
 For further requirements and considerations, including expected **RTT latency and required firewall ports**, please refer to the Requirements and considerations link above.
 
+
+
 ### Module Installation
 
 ```powershell
