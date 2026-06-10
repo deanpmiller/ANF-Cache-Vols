@@ -178,7 +178,8 @@ Get-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
   -AccountName "$AccountName" -PoolName "$PoolName" -Name "$CacheName" |ConvertTo-JSON
 
 # Remove cache (if needed)
-In the first instance, disable **writeback** if enabled.
+# In the first instance, disable **writeback** if enabled.
+```powershell
 Update-AnfCache -ResourceGroupName $ResourceGroupName '
 -AccountName $AccountName -PoolName $PoolName -name "$CacheName" -WriteBack Disabled
 
