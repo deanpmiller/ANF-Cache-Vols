@@ -33,24 +33,14 @@ The example utilises the minimum ANF deployment size of 1 TiB, is configured f
 - **Az.NetAppFiles module version 1.3.0 or higher** (required for cache cmdlets)
 - **Az.Accounts module** (dependency for authentication 5.5.0 or higher)
 - Azure subscription with appropriate permissions
-- Network connectivity to on-premises cluster
-- SSH access to on-premises cluster
+- Network connectivity to on-premises OnTap cluster
+- SSH access to on-premises OnTap cluster
 - The source cluster must be running **ONTAP 9.15.1** or later version and ONTAP **9.15.1P5** to utilise Writeback.
 - In ONTAP versions before 9.18.1, If an SVM DR relationship is broken, FlexCache must be manually recreated with a new origin volume. From ONTAP 9.18.1 onwards:During SVM failover, FlexCache automatically redirects to the DR site origin- **No manual recovery steps required**
 - The example utilises the minimum ANF deployment size of 1 TiB and is configured for Manual QoS.
 - Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload.
   
 For further requirements and considerations, including expected **RTT latency and required firewall ports**, please refer to the Requirements and considerations link above.
-
-
-| Requirement | Details |
-|------------|--------|
-| PowerShell | Version 5.0 or higher |
-| Azure CLI / PowerShell | Azure CLI or Az PowerShell modules installed |
-| Az.NetAppFiles Module | Version 1.3.0 or higher (required for cache cmdlets) |
-| Az.Accounts Module | Version 5.5.0 or higher (authentication dependency) |
-| Azure Subscription | Must have appropriate permissions |
-
 
 ### Module Installation
 
