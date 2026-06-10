@@ -178,14 +178,14 @@ Get-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
   -AccountName "$AccountName" -PoolName "$PoolName" -Name "$CacheName" |ConvertTo-JSON
 
 # Remove cache (if needed)
-In the first instance, disable **writeback** if enabled:
+In the first instance, disable **writeback** if enabled.
 Update-AnfCache -ResourceGroupName $ResourceGroupName '
 -AccountName $AccountName -PoolName $PoolName -name "$CacheName" -WriteBack Disabled
 
 # You can then proceed to delete the ANFcache volume. 
 Remove-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
   -AccountName "$AccountName" -PoolName "$PoolName" -Name "$CacheName"
-> **Note:** After deleting the ANF cache volume, the cluster peering remains in place
+ **Note:** After deleting the ANF cache volume, the cluster peering remains in place
 
 # Retrieve peering commands
 Get-AnfCachePeeringPassphrase -ResourceGroupName "$ResourceGroupName" `
