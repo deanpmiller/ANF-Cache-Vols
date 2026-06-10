@@ -187,7 +187,7 @@ Update-AnfCache -ResourceGroupName $ResourceGroupName `
 Remove-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
   -AccountName "$AccountName" -PoolName "$PoolName" -Name "$CacheName"
 
- **Note:** After deleting the ANF cache volume, the cluster peering remains in place
+# **Note:** After deleting the ANF cache volume, the cluster peering remains in place
 
 # Retrieve peering commands
 Get-AnfCachePeeringPassphrase -ResourceGroupName "$ResourceGroupName" `
