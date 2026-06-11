@@ -40,8 +40,16 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 - The source cluster must be running **ONTAP 9.15.1** or later version and ONTAP **9.15.1P5** to utilise Writeback.
 - In ONTAP versions before 9.18.1, If an SVM DR relationship is broken, FlexCache must be manually recreated with a new origin volume. From ONTAP      **9.18.1** onwards: During SVM failover, FlexCache automatically redirects to the DR site origin- **No manual recovery steps required**
 - Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload.
-  
-For further requirements and considerations, including expected **RTT latency and required firewall ports**, please refer to the Requirements and considerations link above.
+
+### Azure NetApp Files Cache Volumes – Requirements and Considerations
+
+For additional requirements and design considerations specific to **Azure NetApp Files cache volumes**, including:
+
+- **Expected RTT latency** back to on-premises  
+- **Required firewall ports** and network connectivity  
+- **Prerequisites for delegating a subnet** to Azure NetApp Files  
+
+Please refer to the [Go to Official MS Learn Documentation](#official-ms-learn-documentation) section linked above.
 
 ### Module Installation
 
