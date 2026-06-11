@@ -42,7 +42,7 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 - Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload.  
 
 ### Azure NetApp Files Cache Volumes – Requirements and Considerations
-
+---
 For additional requirements and design considerations specific to **Azure NetApp Files cache volumes**, including:
 
 - **Expected RTT latency** back to on-premises  
