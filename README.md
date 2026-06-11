@@ -131,7 +131,7 @@ Get-AnfCachePeeringPassphrase -ResourceGroupName $ResourceGroupName `
 Execute the returned command via SSH on the on-premises cluster. Example:
 
 ```bash
-cluster peer accept -clusterName cache01 -peerClusterName cvodemolab -passphrase xxxxx
+cluster peer create -ipspace Default -encryption-protocol-proposed tls-psk -peer-addrs 10.10.10.10
 ```
 
 Verify with:
@@ -143,7 +143,8 @@ cluster peer show
 
 ### Step 4: Verify Vserver Peering State
 
-Confirm cache state is `VserverPeeringOfferSent`:
+Confirm cache state is `VserverPeeringOfferSent`: (You'll need to wait 30-60 seconds if performing a manual deployment via cli)
+Cache state must = cacheState = 'VserverPeeringOfferSent' verfiy this using the get-anfcache cmdlet before proceeding to execute the v-server peering command on the on-premises cluster.
 
 ```powershell
 Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
@@ -161,17 +162,22 @@ Get-AnfCachePeeringPassphrase -ResourceGroupName $ResourceGroupName `
   -CacheName $CacheName -AccountName $AccountName -PoolName $PoolName `
   | Select-Object VserverPeeringCommand
 ```
+Example:
+VserverPeeringCommand
+---------------------
+vserver peer accept -vserver svm_cvodemolab -peer-vserver svm_449337c72
 
-Monitor job progress with:
+Monitor job progress with once copy and pasting and executing the vserver peer cmd:
+Job will transistion it's state from 'Queued' to 'Sucess'
+
 ```bash
-jobs
+job show
 ```
-
 Then verify:
 ```bash
 vserver peer show
+volume flexcache origin show-caches
 ```
-
 ---
 
 ### Step 6: Verify Cache Health
@@ -188,6 +194,7 @@ Retrieve mount targets:
 ```powershell
 $cache = Get-AnfCache -ResourceGroupName $ResourceGroupName `
   -AccountName $AccountName -PoolName $PoolName
+
 $cache.MountTargets
 ```
 
