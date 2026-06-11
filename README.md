@@ -39,7 +39,7 @@ Required to execute deployment and automation scripts.
 - **Az.NetAppFiles module ≥ 1.3.0** (required for cache cmdlets)
 - **Az.Accounts module ≥ 5.5.0** (authentication dependency)
 - Azure subscription with **appropriate permissions**
-- **SSH access** to the on-premises ONTAP cluster
+- **SSH access** to the on-premises ONTAP cluster with a relevant SSH account
 
 ### ONTAP Considerations
 - The source cluster must be running **ONTAP 9.15.1** or later version and ONTAP **9.15.1P5** to utilise Writeback.
