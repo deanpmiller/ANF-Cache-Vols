@@ -206,7 +206,6 @@ Will extract the IP, and SmbServerFQDN. (Assuming SMB, this should be resolvable
 $cache = Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName -PoolName $PoolName -Name $CacheName
 $cache.MountTargets
 
-```
 This will outpout the share name, you was configured as 'Filepath' within the params variable.
 
 ```powershell
@@ -220,7 +219,7 @@ $cache.FilePath
 - From PS utilise the output extracted when running $cache.MountTargets and $cache.FilePath, you can also choose to use PS or Explorer.
 - 
   List available shares on the SMB server:
-  '''powershell
+```powershell
   Get-SmbShare -CimSession smbserverfqdn
 
 New-PSDrive `
