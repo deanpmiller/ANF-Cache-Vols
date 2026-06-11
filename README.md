@@ -160,17 +160,18 @@ Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
 
 Retrieve (copy) the peering command via PS, and execute the vserver peering command on the on-premises cluster:
 
-##Step 5.1 - Retrieve Peering Command
+### Step 5.1 - Retrieve Peering Command
 ```powershell
 Get-AnfCachePeeringPassphrase -ResourceGroupName $ResourceGroupName `
   -CacheName $CacheName -AccountName $AccountName -PoolName $PoolName `
   | Select-Object VserverPeeringCommand
 ```
-##Step 5.2- Execute vServer peering command on the on-premises cluster.
+### Step 5.2- Execute vServer peering command on the on-premises cluster.
 
 **Example**
+```bash
 vserver peer accept -vserver svm_cvodemolab -peer-vserver svm_441234
-
+```
 Monitor job progress post copy and pasting and executing the vserver peer cmd:
 
 Job will transistion it's state from 'Queued' to 'Success'
@@ -196,10 +197,11 @@ Get-AnfCache `
   -PoolName $PoolName `
   -Name $CacheName |
   Select-Object CacheState, ProvisioningState
+```
 ---
 
 ### Step 7: Retrieve Mount Points and Share Name
-
+```powershell
 $cache.MountTargets
 ```
 Example Output:
@@ -208,8 +210,9 @@ Will include the IP, and SmbServerFQDN.
 
 ```powershell
 $cache.FilePath
+```
 ---
-This will outpout the share name, you was configuied as 'Filepath' within the params variable.
+This will outpout the share name, you was configured as 'Filepath' within the params variable.
 
 ### Step 7: Mount and Test
 
