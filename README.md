@@ -58,6 +58,7 @@ Required to execute deployment and automation scripts.
 - You must create ExpressRoute or VPN resources to ensure network connectivity from the external NetApp ONTAP cluster to the target Azure NetApp Files cluster.
 - Validate required **firewall ports and NSG rules**.
 - Ensure connectivity supports expected **RTT latency** requirements.
+- If compute and storage reside in **different subscriptions**, physical zone alignment must still be validated across subscriptions. For more information, refer to the [official documentation](#official-ms-learn-documentation).
 
 ### Connectivity Requirements
 
@@ -95,7 +96,7 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable. My exam
 - **write-back caching enabled**
 - **Encryption:** Microsoft-managed keys
 - **Availability Zone** 1 - If compute is deployed within the **same subscription**, ensure that both the compute resources and ANF volumes are placed in the same Availability Zone.
-- If compute and storage reside in **different subscriptions**, physical zone alignment must still be validated across subscriptions. For more information, refer to the [official documentation](#official-ms-learn-documentation).
+
 
 ```powershell
 New-AzNetAppFilesCache @params
