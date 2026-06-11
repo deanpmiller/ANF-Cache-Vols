@@ -286,6 +286,7 @@ Update-AnfCache -ResourceGroupName $ResourceGroupName `
 
 - **README.md** - This documentation file
 - **Setup-ANFCache.ps1** - PowerShell script with commented configuration and step-by-step execution
+- -**Manual-PS-ANFCache-Deployment.ps1- Powershell with step by step command line, including commented instructions and explanations.
 
 ---
 
