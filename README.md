@@ -31,7 +31,9 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 ---
 
 ### Script & Tooling Requirements
--  Required to execute deployment and automation scripts.
+
+Required to execute deployment and automation scripts.
+
 - **PowerShell 5.0 or higher**
 - **Azure CLI** or **Azure PowerShell modules**
 - **Az.NetAppFiles module ≥ 1.3.0** (required for cache cmdlets)
