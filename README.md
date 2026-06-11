@@ -92,6 +92,7 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable. My exam
 
 - **Capacity:** 50 GiB
 - **Throughput** 16 MiB/s
+- **FilePath** 'anfcache' In my example, this equates to the the share name of the ANF cache volume, that you will need to map once fully deployed.
 - **Protocol:** SMB, NFS is also [supported](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-16.0.0#example-1-create-a-cache-backed-by-an-on-prem-ontap-origin).
 - **write-back caching enabled**
 - **Encryption:** Microsoft-managed keys
@@ -159,13 +160,13 @@ Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
 
 Retrieve (copy) the peering command via PS, and execute the vserver peering command on the on-premises cluster:
 
-##Step 1 - Retrieve Peering Command
+##Step 5.1 - Retrieve Peering Command
 ```powershell
 Get-AnfCachePeeringPassphrase -ResourceGroupName $ResourceGroupName `
   -CacheName $CacheName -AccountName $AccountName -PoolName $PoolName `
   | Select-Object VserverPeeringCommand
 ```
-##Step 2- Execute vServer peering command on the on-premises cluster.
+##Step 5.2- Execute vServer peering command on the on-premises cluster.
 
 **Example**
 vserver peer accept -vserver svm_cvodemolab -peer-vserver svm_441234
@@ -186,31 +187,41 @@ volume flexcache origin show-caches
 
 ### Step 6: Verify Cache Health
 
-Confirm both `CacheState` and `ProvisioningState` are `Succeeded`:
+Confirm both **`CacheState`** and **`ProvisioningState`** are set to **`Succeeded`**:
 
 ```powershell
-Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
-  -PoolName $PoolName -Name $CacheName| Select-Object CacheState, ProvisioningState
-```
+Get-AnfCache `
+  -ResourceGroupName $ResourceGroupName `
+  -AccountName $AccountName `
+  -PoolName $PoolName `
+  -Name $CacheName |
+  Select-Object CacheState, ProvisioningState
+---
 
-Retrieve mount targets:
-
-```powershell
-$cache = Get-AnfCache -ResourceGroupName $ResourceGroupName `
-  -AccountName $AccountName -PoolName $PoolName $CacheName
+### Step 7: Retrieve Mount Points and Share Name
 
 $cache.MountTargets
 ```
 Example Output:
 
-MountTargetId                        IPAddress SmbServerFqdn
--------------                        --------- -------------
-476                                  10.10.10.19 ANF1234.anf.test
+Will include the IP, and SmbServerFQDN. 
+
+```powershell
+$cache.FilePath
 ---
+This will outpout the share name, you was configuied as 'Filepath' within the params variable.
 
 ### Step 7: Mount and Test
 
 - Mount the ANF cache volume on a jumpbox/client machine, also mount the origin from the jumpbox, or another client with access.
+- From a cmd prompt, utilise net view using the FQDN output extracted when running $cache.MountTargets, you can also choose to just map the share, or use explorer.
+  '''powershell
+  net view \\smbserverfqdn
+This will output the share, or you can utilise.
+
+Net use x: \\smbserverfqdn\Filepath
+  
+- 
 - Create test files in the cache or on-premises volume
 - Verify changes replicate bidirectionally
 - Test create, edit, save, and delete operations
