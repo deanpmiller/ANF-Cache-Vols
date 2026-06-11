@@ -15,6 +15,7 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 - [Module: Az.NetAppFiles (New-AzNetAppFilesCache)](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-16.0.0)
 - [Resizing ANF Cache volumes, and guidance regarding intial deployment size](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-volumes-resize-guidelines)
 - [Requirements and considerations for Azure NetApp Files cache volumes](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements)
+- [Considerations When creating the delegated subnet for Azure NetApp Files](https://learn.microsoft.com/en-us/azure/azure-netapp-files/azure-netapp-files-delegate-subnet)
 - [Physical and logical availability zones](https://learn.microsoft.com/en-gb/azure/reliability/availability-zones-overview?tabs=azure-powershell#physical-and-logical-availability-zones)
 
 
@@ -33,10 +34,11 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 - **Az.NetAppFiles module version 1.3.0 or higher** (required for cache cmdlets)
 - **Az.Accounts module** (dependency for authentication 5.5.0 or higher)
 - Azure subscription with appropriate permissions
+- To use SMB, you should configure an Active Directory (AD) connection within the NetApp account and perform a domain join to enable the creation of   SMB-enabled cache volumes
 - Network connectivity to on-premises OnTap cluster
 - SSH access to on-premises OnTap cluster
 - The source cluster must be running **ONTAP 9.15.1** or later version and ONTAP **9.15.1P5** to utilise Writeback.
-- In ONTAP versions before 9.18.1, If an SVM DR relationship is broken, FlexCache must be manually recreated with a new origin volume. From ONTAP      9.18.1 onwards: During SVM failover, FlexCache automatically redirects to the DR site origin- **No manual recovery steps required**
+- In ONTAP versions before 9.18.1, If an SVM DR relationship is broken, FlexCache must be manually recreated with a new origin volume. From ONTAP      **9.18.1** onwards: During SVM failover, FlexCache automatically redirects to the DR site origin- **No manual recovery steps required**
 - Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload.
   
 For further requirements and considerations, including expected **RTT latency and required firewall ports**, please refer to the Requirements and considerations link above.
