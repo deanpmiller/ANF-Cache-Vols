@@ -31,7 +31,7 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 ---
 
 ### Script & Tooling Requirements
-# Required to execute deployment and automation scripts.
+-  Required to execute deployment and automation scripts.
 - **PowerShell 5.0 or higher**
 - **Azure CLI** or **Azure PowerShell modules**
 - **Az.NetAppFiles module ≥ 1.3.0** (required for cache cmdlets)
@@ -43,13 +43,10 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 - The source cluster must be running **ONTAP 9.15.1** or later version and ONTAP **9.15.1P5** to utilise Writeback.
 - In ONTAP versions before 9.18.1, If an SVM DR relationship is broken, FlexCache must be manually recreated with a new origin volume.
 - From ONTAP **9.18.1** onwards: During SVM failover, FlexCache automatically redirects   to the DR site origin- **No manual recovery steps required**
-
-
-
-- To use SMB, you should configure an Active Directory (AD) connection within the NetApp account and perform a domain join to enable the creation of   SMB-enabled cache volumes
-- Network connectivity to on-premises OnTap cluster
-
-- 
+  
+### Azure NetApp Files (ANF) Considerations
+- To use SMB, configure an **Active Directory (AD) connection** within the NetApp account and perform a domain join.
+- Ensure **DNS and AD DS integration** is in place prior to cache volume creation.
 - Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload.  
 
 ### Azure Infrastructure Requirements
@@ -58,13 +55,12 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 - Validate required **firewall ports and NSG rules**.
 - Ensure connectivity supports expected **RTT latency** requirements.
 
-## Azure NetApp Files Cache Volumes – Requirements and Considerations
+### Azure NetApp Files Cache Volumes – Requirements and Considerations
 
 For additional requirements and design considerations specific to **Azure NetApp Files cache volumes**, including:
 
 - **Expected RTT latency** back to on-premises  
-- **Required firewall ports** and network connectivity  
-- **Prerequisites for delegating a subnet** to Azure NetApp Files  
+- **Required firewall ports** and network connectivity 
 
 Please refer to the [Go to Official MS Learn Documentation](#official-ms-learn-documentation) section linked above.
 
