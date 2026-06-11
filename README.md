@@ -40,7 +40,7 @@ The example utilises the minimum ANF deployment capacity pool of 1 TiB, is con
 - In ONTAP versions before 9.18.1, If an SVM DR relationship is broken, FlexCache must be manually recreated with a new origin volume. From ONTAP      **9.18.1** onwards: During SVM     failover, FlexCache automatically redirects to the DR site origin- **No manual recovery steps required**
 - Ensure the capacity pool has sufficient space for the new cache volume, as well as available throughput to support the workload.  
 
-### Azure NetApp Files Cache Volumes – Requirements and Considerations
+## Azure NetApp Files Cache Volumes – Requirements and Considerations
 
 For additional requirements and design considerations specific to **Azure NetApp Files cache volumes**, including:
 
