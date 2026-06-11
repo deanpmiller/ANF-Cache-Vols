@@ -54,17 +54,21 @@ Required to execute deployment and automation scripts.
 ### Azure Infrastructure Requirements
 - Configure a **delegated subnet** for Azure NetApp Files.
 - Ensure **network connectivity** to the on-premises ONTAP cluster.
+- You must create ExpressRoute or VPN resources to ensure network connectivity from the external NetApp ONTAP cluster to the target Azure NetApp Files cluster.
 - Validate required **firewall ports and NSG rules**.
 - Ensure connectivity supports expected **RTT latency** requirements.
 
-### Azure NetApp Files Cache Volumes – Requirements and Considerations
+### Connectivity Requirements
 
-For additional requirements and design considerations specific to **Azure NetApp Files cache volumes**, including:
+Connectivity between the on-premises ONTAP cluster and Azure NetApp Files must be **bidirectional** and include the following firewall rules:
 
-- **Expected RTT latency** back to on-premises  
-- **Required firewall ports** and network connectivity 
+- **ICMP**
+- **TCP 11104**
+- **TCP 11105**
+- **HTTPS**
 
-Please refer to the [Go to Official MS Learn Documentation](#official-ms-learn-documentation) section linked above.
+Network connectivity must be established between **all intercluster (IC) LIFs on the source ONTAP cluster** and **all IC LIFs on the Azure NetApp Files endpoint**.
+``
 
 ### Module Installation
 
