@@ -94,7 +94,8 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable. My exam
 - **Protocol:** SMB, NFS is also [supported](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-16.0.0#example-1-create-a-cache-backed-by-an-on-prem-ontap-origin).
 - **write-back caching enabled**
 - **Encryption:** Microsoft-managed keys
-- **Availability Zone** 1 - Physical zones are real datacentres; logical zones are the labels in your subscription. Use the same physical zone across subscriptions for **compute and storage.** For more info refer to the [doc link above](#official-ms-learn-documentation)
+- **Availability Zone** 1 - If compute is deployed within the **same subscription**, ensure that both the compute resources and ANF volumes are placed in the same Availability Zone.
+- If compute and storage reside in **different subscriptions**, physical zone alignment must still be validated across subscriptions. For more information, refer to the [official documentation](#official-ms-learn-documentation).
 
 ```powershell
 New-AzNetAppFilesCache @params
