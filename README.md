@@ -208,7 +208,6 @@ $cache.MountTargets
 
 This will outpout the share name, you was configured as 'Filepath' within the params variable.
 
-```powershell
 $cache.FilePath
 ```
 ---
