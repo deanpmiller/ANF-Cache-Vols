@@ -68,9 +68,8 @@ Connectivity between the on-premises ONTAP cluster and Azure NetApp Files must b
 - **HTTPS**
 
 Network connectivity must be established between **all intercluster (IC) LIFs on the source ONTAP cluster** and **all IC LIFs on the Azure NetApp Files endpoint**.
-``
 
-### Module Installation
+## Module Installation
 
 ```powershell
 Install-Module Az -Force
