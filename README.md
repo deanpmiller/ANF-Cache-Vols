@@ -141,10 +141,12 @@ cluster peer show
 
 ---
 
-### Step 4: Verify Vserver Peering State
+### Step 4: Cache State Validation 
 
-Confirm cache state is `VserverPeeringOfferSent`: (You'll need to wait 30-60 seconds if performing a manual deployment via cli)
-Cache state must = cacheState = 'VserverPeeringOfferSent' verfiy this using the get-anfcache cmdlet before proceeding to execute the v-server peering command on the on-premises cluster.
+
+Confirm that the cache state is **`VserverPeeringOfferSent`** before proceeding.
+ **Note**  
+When performing a manual deployment via CLI, allow approximately **30–60 seconds** for the cache state to update. The script sleeps, before attempting again to retrieve.
 
 ```powershell
 Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
@@ -153,22 +155,24 @@ Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
 
 ---
 
-### Step 5: Establish Vserver Peering
+### Step 5: Retrieve vServer Peering Command and Establish Vserver Peering 
 
-Retrieve and execute the vserver peering command on the on-premises cluster:
+Retrieve (copy) the peering command via PS, and execute the vserver peering command on the on-premises cluster:
 
+##Step 1 - Retrieve Peering Command
 ```powershell
 Get-AnfCachePeeringPassphrase -ResourceGroupName $ResourceGroupName `
   -CacheName $CacheName -AccountName $AccountName -PoolName $PoolName `
   | Select-Object VserverPeeringCommand
 ```
-Example:
-VserverPeeringCommand
----------------------
-vserver peer accept -vserver svm_cvodemolab -peer-vserver svm_449337c72
+##Step 2- Execute vServer peering command on the on-premises cluster.
 
-Monitor job progress with once copy and pasting and executing the vserver peer cmd:
-Job will transistion it's state from 'Queued' to 'Sucess'
+**Example**
+vserver peer accept -vserver svm_cvodemolab -peer-vserver svm_441234
+
+Monitor job progress post copy and pasting and executing the vserver peer cmd:
+
+Job will transistion it's state from 'Queued' to 'Success'
 
 ```bash
 job show
@@ -186,23 +190,27 @@ Confirm both `CacheState` and `ProvisioningState` are `Succeeded`:
 
 ```powershell
 Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
-  -PoolName $PoolName | Select-Object CacheState, ProvisioningState
+  -PoolName $PoolName -Name $CacheName| Select-Object CacheState, ProvisioningState
 ```
 
 Retrieve mount targets:
 
 ```powershell
 $cache = Get-AnfCache -ResourceGroupName $ResourceGroupName `
-  -AccountName $AccountName -PoolName $PoolName
+  -AccountName $AccountName -PoolName $PoolName $CacheName
 
 $cache.MountTargets
 ```
+Example Output:
 
+MountTargetId                        IPAddress SmbServerFqdn
+-------------                        --------- -------------
+476                                  10.10.10.19 ANF1234.anf.test
 ---
 
 ### Step 7: Mount and Test
 
-- Mount the ANF cache volume on a jumpbox/client machine
+- Mount the ANF cache volume on a jumpbox/client machine, also mount the origin from the jumpbox, or another client with access.
 - Create test files in the cache or on-premises volume
 - Verify changes replicate bidirectionally
 - Test create, edit, save, and delete operations
