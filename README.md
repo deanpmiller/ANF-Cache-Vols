@@ -153,7 +153,8 @@ When performing a manual deployment via CLI, allow approximately **30–60 secon
 Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
   -PoolName $PoolName | Select-Object CacheState
 ```
-
+[!IMPORTANT]
+>You have 12 minutes after the cacheState transitions to VserverPeeringOfferSent to complete execution of the vserverPeeringCommand.
 ---
 
 ### Step 5: Retrieve vServer Peering Command and Establish Vserver Peering 
