@@ -138,7 +138,7 @@ cluster peer create -ipspace Default -encryption-protocol-proposed tls-psk -peer
 [!NOTE]
 >Replace IP-SPACE-NAME with the IP space that the IC LIFs use on the external origin volume’s ONTAP system.
 
-Verify with:
+Verify cluster peering is sucessfull with:
 ```bash
 cluster peer show
 ```
