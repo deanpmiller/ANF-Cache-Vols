@@ -135,6 +135,8 @@ Execute the returned command via SSH on the on-premises cluster. Example:
 ```bash
 cluster peer create -ipspace Default -encryption-protocol-proposed tls-psk -peer-addrs 10.10.10.10
 ```
+[!NOTE]
+>Replace IP-SPACE-NAME with the IP space that the IC LIFs use on the external origin volume’s ONTAP system.
 
 Verify with:
 ```bash
