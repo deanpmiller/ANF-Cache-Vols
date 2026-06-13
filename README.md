@@ -101,7 +101,7 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable. My exam
 
 
 ```powershell
-New-AzNetAppFilesCache @params -NoWait
+New-AzNetAppFilesCache @params
 ```
 [!WARNING]
 > [Write-back mode](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements#write-back-considerations) introduces asynchronous persistence to the origin. The external origin **must** also remain less than **80% full.**
