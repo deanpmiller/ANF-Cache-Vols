@@ -63,18 +63,20 @@ $AccountName       = $params.AccountName
 $PoolName          = $params.PoolName
 $CacheName         = $params.CacheName
 
+#Step 1:
+#Create an ANF Cache Volume.
+
 New-AzNetAppFilesCache @params
 
 #Step 2: 
 #Monitor the cache creation process, you can use the Get-AnfCache cmdlet to check the status of the cache. It may take some time for the cache to be created and become available.
-#Use the command below to check to see if the cacheState transitions to = 'ClusterPeeringOfferSent', proceed to Step 3.
+#Use the command below to check to see if the cacheState transitions to = 'ClusterPeeringOfferSent', when the peeering offer is sennt, proceed to Step 3.
 
 Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName "$AccountName" -PoolName "$PoolName" -name $CacheName |select-Object CacheState  
 
 #Step 3:
 # Once the cache is created and in the ClusterPeeringOfferSent state, you can retrieve the peering passphrase and use it to establish the peering relationship between the cache and the on-premises cluster. 
-# Logon now to the on-premises cluster and use the ClusterPeeringCommand to establish peering. 
-
+# Logon now to the on-premises cluster via SSH and use the command below to provide the ClusterPeeringCommand, and to provide the passphrase to establish peering . 
 
 Get-AnfCachePeeringPassphrase -ResourceGroupName $ResourceGroupName  -CacheName $CacheName -AccountName $AccountName -PoolName $PoolName |Select-Object ClusterPeeringCommand, ClusterPeeringPassphrase
 
@@ -84,10 +86,9 @@ Get-AnfCachePeeringPassphrase -ResourceGroupName $ResourceGroupName  -CacheName 
 
 #Step 4:
 
-#After cluster peering, you next need check the cache status, the cacheState must = cacheState = 'VserverPeeringOfferSent' verfiy this using the get-anfcache cmdlet before proceeding to execute the v-server peering command on the on-premises cluster.
+#After cluster peering, you next need check the cache status, the cacheState must = cacheState = 'VserverPeeringOfferSent' verify this using the get-anfcache cmdlet below, before proceeding to execute the v-server peering command on the on-premises cluster.
 
 Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName -PoolName $PoolName -name $CacheName |Select-Object CacheState
-# Cache state must = cacheState = 'VserverPeeringOfferSent verfiy this using the get-anfcache cmdlet before proceeding to execute the v-server peering command on the on-premises cluster.
 
 #Step 5
 #vserver peering, ensure your ssh session is still active to the on-premises cluster and execute the VserverPeeringCommand retrieved as below to complete the v-server peering process. 
@@ -102,4 +103,11 @@ Get-AnfCachePeeringPassphrase -ResourceGroupName $ResourceGroupName  -CacheName 
 # Step 6
 # verify the cache is healthy and peered successfully, you can use the Get-AnfCache cmdlet to check the CacheState and ProvisioningState. The CacheState should show as 'Succeeded' and the ProvisioningState should show as 'Succeeded' if everything is working correctly :D
 
-Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName -PoolName $PoolName -name $CacheName |Select-Object CacheState, ProvisioningState  
+Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName -PoolName $PoolName -name $CacheName |Select-Object CacheState, ProvisioningState 
+
+# Step 7
+# Extract the mount po
+$cache = Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName -PoolName $PoolName -Name $CacheName
+Write-Host "Mount Targets:" -ForegroundColor Yellow
+$cache.MountTargets
+
