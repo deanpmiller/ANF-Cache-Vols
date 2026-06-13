@@ -33,38 +33,80 @@ Set-AzContext -SubscriptionId "[Insert Azure Subscription ID]"
 
 # Please refer to the github repo for latest instructions and updates.
 ## https://github.com/deanpmiller/ANF-Cache-Vols
+# ===========================================================================================
+# AUTHENTICATION & MODULE VALIDATION
+# ===========================================================================================
+
+# Connect to Azure Account
+# Replace with your actual Tenant ID
+Connect-AzAccount -Tenant "# ADD YOUR TENANT ID"
+
+# Set the subscription context
+# Replace with your actual Subscription ID
+Set-AzContext -SubscriptionId "# ADD YOUR SUBSCRIPTION ID"
+
+# Ensure you have version 1.3.0 or higher of the Az.NetAppFiles module
+#Un-Comment if required
+#Install-Module Az -Force
+#Install-Module Az.NetAppFiles -Force
+#Get-Module -ListAvailable Az.NetAppFiles
+
+# Validate dependencies
+# $PSVersionTable.PSVersion
+# Get-Module -ListAvailable Az.Accounts
+# Get-Module -ListAvailable Az.NetAppFiles
+
+# ===========================================================================================
+# CONFIGURATION VARIABLES
+# ===========================================================================================
+# UPDATE THESE VARIABLES TO MATCH YOUR ENVIRONMENT
+
+$subsId = "# ADD YOUR SUBSCRIPTION ID"
 
 # Create variables for the cache and peering subnets
-# Assumes write-back cache with SMB protocol, peering to an on-premises cluster with the following details:
+# This example assumes write-back cache with SMB protocol, peering to an on-premises cluster
+# NFS is also supported as a protocol for the cache
 
-$subsId                   = "[Insert Azure Subscription ID]"
 $params = @{
-    ResourceGroupName        = "[Insert Resource Group Name]"
-    AccountName              = "[Insert Azure NetApp Account Name]"
-    PoolName                 = "[Insert Capacity Pool Name]"
-    Zone                     = "[Insert Availability Zone (e.g., 1)]"
-    Size                     = (50 * 1024 * 1024 * 1024)  # better than string for size, as it avoids any potential parsing issues, the cmdlet expects a long value for size in bytes. 50GiB is allocated which is the minimum cache size allowed.
-    ProtocolType             = "SMB"
+    ResourceGroupName        = "# ADD YOUR RESOURCE GROUP NAME"
+    AccountName              = "# ADD YOUR NETAPP ACCOUNT NAME"
+    PoolName                 = "# ADD YOUR CAPACITY POOL NAME"
+    Zone                     = "1"
+    Size                     = (50 * 1024 * 1024 * 1024)  # 100GiB is allocated (50GiB is the minimum cache size allowed)
+    ProtocolType             = "SMB"                        # Options: SMB or NFS
     WriteBack                = "Enabled"
-    OriginPeerAddress        = "[Insert On-Premises ONTAP Cluster IP Address]"
-    OriginPeerClusterName    = "[Insert On-Premises ONTAP Cluster Name]"
-    OriginPeerVserverName    = "[Insert On-Premises SVM Name]"
-    OriginPeerVolumeName     = "[Insert Origin Volume Name]"
-    Location                 = "[Insert Azure Region (e.g., westeurope)]"
-    CacheName                = "[Insert Cache Volume Name]"
-    FilePath                 = "[Insert SMB Share Name (e.g., anfcache)]"
+    OriginPeerAddress        = "# ADD ON-PREMISES CLUSTER IP ADDRESS"
+    OriginPeerClusterName    = "# ADD ON-PREMISES CLUSTER NAME"
+    OriginPeerVserverName    = "# ADD ON-PREMISES VSERVER NAME"
+    OriginPeerVolumeName     = "# ADD ON-PREMISES VOLUME NAME"
+    Location                 = "# ADD YOUR AZURE REGION (e.g., westeurope)"
+    CacheName                = "cache01"
+    FilePath                 = "# ADD YOUR CACHE FILE PATH"
     EncryptionKeySource      = "Microsoft.NetApp"
-    ThroughputMibps          = "[Insert Throughput in MiB/s]"
-    CacheSubnetResourceId    = "/subscriptions/$subsId/resourceGroups/[Insert Resource Group Name]/providers/Microsoft.Network/virtualNetworks/[Insert Virtual Network Name]/subnets/[Insert Cache Subnet Name]"
-    PeeringSubnetResourceId  = "/subscriptions/$subsId/resourceGroups/[Insert Resource Group Name]/providers/Microsoft.Network/virtualNetworks/[Insert Virtual Network Name]/subnets/[Insert Peering Subnet Name]"
+    ThroughputMibps         =   16 #example utilised for a 1TiB of ANF standard.
+    CacheSubnetResourceId    = "/subscriptions/$subsId/resourceGroups/# ADD RESOURCE GROUP/providers/Microsoft.Network/virtualNetworks/# ADD VNET NAME/subnets/# ADD SUBNET NAME"
+    PeeringSubnetResourceId  = "/subscriptions/$subsId/resourceGroups/# ADD RESOURCE GROUP/providers/Microsoft.Network/virtualNetworks/# ADD VNET NAME/subnets/# ADD SUBNET NAME"
 }
+
+# Ensure these variables are also set to continue to step 2
 $ResourceGroupName = $params.ResourceGroupName
 $AccountName       = $params.AccountName
 $PoolName          = $params.PoolName
 $CacheName         = $params.CacheName
 
+# ===========================================================================================
+# STEP 1: CREATE CACHE
+# ===========================================================================================
+# Creates the ANF FlexCache volume with specified parameters
+# Capacity: 100 GiB minimum. Service level: Standard
+# Throughput: 16MiBS. Comsuming the full allocated tput for the pool. 
+# Protocol: SMB with write-back caching enabled
+# Encryption: Microsoft-managed keys
+
 #Step 1:
 #Create an ANF Cache Volume.
+New-AnfCache @params 
+Write-Host "Cache creation initiated. Proceeding to Step 2..." -ForegroundColor Green
 
 New-AzNetAppFilesCache @params
 
