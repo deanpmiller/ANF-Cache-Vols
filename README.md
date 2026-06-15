@@ -119,7 +119,7 @@ $params = @{
     CacheName                = "<cache-name>"
     FilePath                 = "<junction-path>"
     EncryptionKeySource      = "Microsoft.NetApp"
-    ThroughputMibps          = 1
+    ThroughputMibps          = 16
 
  # ⚠️ Ensure the resource group name below is correct (common failure point)
     CacheSubnetResourceId    = "/subscriptions/$subsId/resourceGroups/<network-resource-group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>"
