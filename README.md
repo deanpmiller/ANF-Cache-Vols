@@ -81,10 +81,50 @@ Install-Module Az.NetAppFiles -Force
 Get-Module -ListAvailable Az.NetAppFiles
 ```
 
+
 ## Configuration
 
-The **Manual-PS-ANFCache-Deployment.ps1** script contains the CLI commands alongside a hashtable, which acts as a structured collection of configuration settings (key = name, value = data).
-It also defines all required variables needed to execute the CLI successfully. I used VisualStudioCode, with a terminal session, and the deployment script downloaded.
+The **Manual-PS-ANFCache-Deployment.ps1** script contains the PowerShell commands alongside a hashtable, which acts as a structured collection of configuration settings (key = name, value = data).  
+It also defines all variables required to successfully execute the deployment.
+
+The script was developed and tested using **Visual Studio Code with an integrated terminal session**.
+
+## Prerequisites
+
+Before running the script:
+
+1. Login to Azure  
+2. Select the correct subscription  
+3. Set required variables  
+
+Ensure the subscription ID is set **before creating the hashtable**, as it is required for building the resource IDs.
+
+```powershell
+# Set the subscription ID (must match where the cache and network resources exist)
+$subsId = "a03cfa5e-a233-4b82-9946-6aafa420e1e4"
+$params = @{
+    ResourceGroupName        = "<anf-resource-group>"
+    AccountName              = "<anf-account-name>"
+    PoolName                 = "<capacity-pool-name>"
+    Zone                     = "<zone>"
+    Size                     = (50 * 1024 * 1024 * 1024) # Example: 50 GiB (minimum supported size)
+    ProtocolType             = "SMB"
+    WriteBack                = "Enabled"
+    # Origin (CVO / ONTAP) configuration
+    OriginPeerAddress        = "<origin-ip-address>"
+    OriginPeerClusterName    = "<cluster-name>"
+    OriginPeerVserverName    = "<svm-name>"
+    OriginPeerVolumeName     = "<origin-volume-name>"
+    Location                 = "<azure-region>"
+    CacheName                = "<cache-name>"
+    FilePath                 = "<junction-path>"
+    EncryptionKeySource      = "Microsoft.NetApp"
+    ThroughputMibps          = 1
+
+ # ⚠️ Ensure the resource group name below is correct (common failure point)
+    CacheSubnetResourceId    = "/subscriptions/$subsId/resourceGroups/<network-resource-group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>"
+    PeeringSubnetResourceId  = "/subscriptions/$subsId/resourceGroups/<network-resource-group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>"
+}
 
 ---
 
