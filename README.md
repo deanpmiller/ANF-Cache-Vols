@@ -101,7 +101,7 @@ Ensure the subscription ID is set **before creating the hashtable**, as it is re
 
 ```powershell
 # Set the subscription ID (must match where the cache and network resources exist)
-$subsId = "a03cfa5e-a233-4b82-9946-6aafa420e1e4"
+$subsId = "<insert sub-id>"
 $params = @{
     ResourceGroupName        = "<anf-resource-group>"
     AccountName              = "<anf-account-name>"
