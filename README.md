@@ -83,14 +83,15 @@ Get-Module -ListAvailable Az.NetAppFiles
 
 ## Configuration
 
-Before running the script, update the configuration variables in `Setup-ANFCache.ps1` to match your environment. See the script file for detailed comments on each parameter.
+The Manual-PS-ANFCache-Deployment.ps1 script contains the CLI commands alongside a hashtable, which acts as a structured collection of configuration settings (key = name, value = data).
+It also defines all required variables needed to execute the CLI successfully.
 
 ---
 
 ## Script Workflow
 
 ### Step 1: Create Cache
-Creates an ANF FlexCache volume using parameters defined in a hashtable. My example is configuired with the following properties:
+Creates an ANF FlexCache volume using parameters defined in a hashtable. My example is configured with the following properties:
 
 - **Capacity:** 50 GiB
 - **Throughput** 16 MiB/s
@@ -99,7 +100,6 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable. My exam
 - **write-back caching enabled**
 - **Encryption:** Microsoft-managed keys
 - **Availability Zone** 1 - If compute is deployed within the **same subscription**, ensure that both the compute resources and ANF volumes are placed in the same Availability Zone.
-
 
 ```powershell
 New-AzNetAppFilesCache @params
