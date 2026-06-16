@@ -138,9 +138,9 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable. My exam
 - **Throughput** 16 MiB/s
 - **FilePath** 'anfcache' In my example, this equates to the the share name of the ANF cache volume, that you will need to map once fully deployed.
 - **Protocol:** SMB, NFS is also [supported](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-16.0.0#example-1-create-a-cache-backed-by-an-on-prem-ontap-origin).
-- **write-back caching enabled**
+- **Write-back caching enabled**
 - **Encryption:** Microsoft-managed keys
-- **Availability Zone** 1 - If compute is deployed within the **same subscription**, ensure that both the compute resources and ANF volumes are placed in the same Availability Zone.
+- **Availability Zone** - If compute is deployed within the **same subscription**, ensure that both the compute resources and ANF volumes are placed in the same Availability Zone.
 
 ```powershell
 Start-Job -Name "ANF-Create-Cache-$CacheName" `
