@@ -91,11 +91,12 @@ The script was developed and tested using **Visual Studio Code with an integrate
 
 ## Azure PS CLI Prerequisites
 
-Before running the script:
+Before deploying an ANF cache volume and following the cli:
 
 1. Login to Azure  
 2. Select the correct subscription  
-3. Set required variables  
+3. Set required variables
+4. The **Manual-PS-ANFCache-Deployment.ps1**, contains the commands to the steps above if required.
 
 Ensure the subscription ID is set **before creating the hashtable**, as it is required for building the resource IDs.
 
@@ -142,7 +143,13 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable. My exam
 - **Availability Zone** 1 - If compute is deployed within the **same subscription**, ensure that both the compute resources and ANF volumes are placed in the same Availability Zone.
 
 ```powershell
-New-AzNetAppFilesCache @params
+Start-Job -Name "ANF-Create-Cache-$CacheName" `
+    -ScriptBlock {
+        param($params)
+
+        New-AzNetAppFilesCache @params
+    } `
+    -ArgumentList $params | Out-Null
 ```
 [!WARNING]
 > [Write-back mode](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements#write-back-considerations) introduces asynchronous persistence to the origin. The external origin **must** also remain less than **80% full.**
