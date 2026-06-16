@@ -210,7 +210,11 @@ Verify cluster peering is sucessfull with:
 ```bash
 cluster peer show
 ```
+Example Output
 
+| Peer Cluster Name | Cluster Serial Number | Availability | Authentication |
+|------------------|-----------------------|-------------|----------------|
+| az-ams08-***-sto | 1-80-******           | Available   | ok             |
 ---
 
 ### Step 4: Cache State Validation 
