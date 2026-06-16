@@ -99,7 +99,6 @@ Before deploying an ANF cache volume using the CLI:
 3. Set the required variables  
 
 The script **Manual-PS-ANFCache-Deployment.ps1** contains the commands for the steps above, along with all required CLI commands. It is recommended to download and open the script in Visual Studio Code.
-``
 
 Ensure the subscription ID is set **before creating the hashtable**, as it is required for building the resource IDs.
 
