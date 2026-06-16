@@ -222,11 +222,10 @@ Example Output
 
 Confirm that the cache state is **`VserverPeeringOfferSent`** before proceeding.
  **Note**  
-When performing a manual deployment via CLI, allow approximately **30–60 seconds** for the cache state to update. The script sleeps, before attempting again to retrieve.
+When performing a manual deployment via CLI, allow approximately **30–60 seconds** for the cache state to update. 
 
 ```powershell
-Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
-  -PoolName $PoolName | Select-Object CacheState
+ Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName -PoolName $PoolName -name $CacheName 
 ```
 [!IMPORTANT]
 >You have 12 minutes after the cacheState transitions to VserverPeeringOfferSent to complete execution of the vserverPeeringCommand.
