@@ -23,11 +23,16 @@ The minimum cache volume deployment is 50GiB which can scale up to 300TiB. For m
 
 ## Table of Contents
 - [Overview](#overview)
+- [Official MS Learn Documentation](#official-ms-learn-documentation)
 - [Prerequisites](#prerequisites)
-- [Deployment Options](#deployment-options)
-- [PowerShell Example](#powershell-example)
-- [Important Considerations](#important-considerations)
-- [References](#references)
+- [Module Installation](#module-installation)
+- [Configuration](#configuration)
+- [Azure PS CLI Prerequisites](#azure-ps-cli-prerequisites)
+- [Script Workflow](#script-workflow)
+- [Useful Reference Commands](#useful-reference-commands)
+- [Notes](#notes)
+- [Files in This Repository](#files-in-this-repository)
+- [Support](#support)
 
 ## Prerequisites
 ---
