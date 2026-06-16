@@ -89,7 +89,7 @@ It also defines all variables required to successfully execute the deployment.
 
 The script was developed and tested using **Visual Studio Code with an integrated terminal session**.
 
-## Prerequisites
+## Azure PS CLI Prerequisites
 
 Before running the script:
 
