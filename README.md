@@ -89,14 +89,17 @@ It also defines all variables required to successfully execute the deployment.
 
 The script was developed and tested using **Visual Studio Code with an integrated terminal session**.
 
+
 ## Azure PS CLI Prerequisites
 
-Before deploying an ANF cache volume and following the cli:
+Before deploying an ANF cache volume using the CLI:
 
 1. Login to Azure  
 2. Select the correct subscription  
-3. Set required variables
-4. The **Manual-PS-ANFCache-Deployment.ps1**, contains the commands to the steps above if required.
+3. Set the required variables  
+
+The script **Manual-PS-ANFCache-Deployment.ps1** contains the commands for the steps above, along with all required CLI commands. It is recommended to download and open the script in Visual Studio Code.
+``
 
 Ensure the subscription ID is set **before creating the hashtable**, as it is required for building the resource IDs.
 
