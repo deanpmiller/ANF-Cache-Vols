@@ -185,9 +185,12 @@ Write-Host "Proceed to cluster peering"
 > You have 30 minutes after the cacheState transitions to ClusterPeeringOfferSent to execute the clusterPeeringCommand.
 ---
 
+
 ### Step 3: Establish Cluster Peering
 
-Retrieve (copy) the cluster peering command and passphrase and excute on the on-premises cluster:
+Retrieve (copy) the cluster peering command and passphrase using the following cmdlet, then execute the command on the on-premises cluster via an SSH session.
+
+The output will display both the `ClusterPeeringCommand` and the `ClusterPeeringPassphrase`. You will be prompted to enter the passphrase after running the peering command.
 
 ```powershell
 Get-AnfCachePeeringPassphrase -ResourceGroupName $ResourceGroupName `
