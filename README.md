@@ -123,10 +123,14 @@ $params = @{
     EncryptionKeySource      = "Microsoft.NetApp"
     ThroughputMibps          = 16
 
- # ⚠️ Ensure the resource group name below is correct (common failure point)
+ # ⚠️ Ensure the resource group name below is correct. This is the resourceID of your ANF delegated subnet (common failure point)
     CacheSubnetResourceId    = "/subscriptions/$subsId/resourceGroups/<network-resource-group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>"
     PeeringSubnetResourceId  = "/subscriptions/$subsId/resourceGroups/<network-resource-group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>"
 }
+$ResourceGroupName = $params.ResourceGroupName
+$AccountName       = $params.AccountName
+$PoolName          = $params.PoolName
+$CacheName         = $params.Name
 ```
 ---
 
@@ -145,13 +149,10 @@ Creates an ANF FlexCache volume using parameters defined in a hashtable. My exam
 - For a full list of available parmeters, please refer to: [Az.NetAppFiles Module](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-15.6.0)
 
 ```powershell
-Start-Job -Name "ANF-Create-Cache-$CacheName" `
-    -ScriptBlock {
-        param($params)
-
-        New-AzNetAppFilesCache @params
-    } `
-    -ArgumentList $params | Out-Null
+Start-Job -ScriptBlock {
+   param($params)
+    New-AzNetAppFilesCache @params
+} -ArgumentList $params | Out-Null
 ```
 [!WARNING]
 > [Write-back mode](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements#write-back-considerations) introduces asynchronous persistence to the origin. The external origin **must** also remain less than **80% full.**
@@ -163,13 +164,19 @@ Start-Job -Name "ANF-Create-Cache-$CacheName" `
 Poll the cache status until it reaches **`ClusterPeeringOfferSent`** state this will transistion from 'Creating'. Note. Additional variables need to be set to continue.
 
 ```powershell
-$ResourceGroupName = $params.ResourceGroupName
-$AccountName       = $params.AccountName
-$PoolName          = $params.PoolName
-$CacheName         = $params.CacheName
+# Loops until CacheState reaches 'ClusterPeeringOfferSent' before proceeding.
+do {
+    $state = (Get-AnfCache -ResourceGroupName $ResourceGroupName `
+                          -AccountName $AccountName `
+                          -PoolName $PoolName `
+                          -Name $CacheName).CacheState
 
-Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
-  -PoolName $PoolName -name $CacheName  | Select-Object CacheState
+    Write-Host "Current CacheState: $state"
+    Start-Sleep -Seconds 10
+
+} until ($state -eq "ClusterPeeringOfferSent")
+
+Write-Host "Proceed to cluster peering"
 ```
 [!IMPORTANT]
 > You have 30 minutes after the cacheState transitions to ClusterPeeringOfferSent to execute the clusterPeeringCommand.
