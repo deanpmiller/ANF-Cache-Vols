@@ -327,10 +327,6 @@ Remove-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
 
 # *Note* After deleting the ANF cache volume, the cluster peering remains in place
 
-# Retrieve peering commands
-Get-AnfCachePeeringPassphrase -ResourceGroupName "$ResourceGroupName" `
-  -CacheName cache01 -AccountName "$AccountName" -PoolName "Flexcache"
-
 # Update throughput of a cache volume
 Update-AnfCache -ResourceGroupName $ResourceGroupName `
   -AccountName $AccountName -PoolName $PoolName -ThroughputMibps 2 -Name "$CacheName"  
