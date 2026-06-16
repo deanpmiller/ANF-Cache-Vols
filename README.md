@@ -206,7 +206,6 @@ cluster peer create -ipspace Default -encryption-protocol-proposed tls-psk -peer
 [!NOTE]
 >Replace IP-SPACE-NAME with the IP space that the IC LIFs use on the external origin volume’s ONTAP system.
 
-```markdown
 From the SSH session on the ONTAP cluster, verify cluster peering with:
 
 ```bash
@@ -220,7 +219,6 @@ Example Output
 ---
 
 ### Step 4: Cache State Validation 
-
 
 Confirm that the cache state is **`VserverPeeringOfferSent`** before proceeding.
  **Note**  
