@@ -231,7 +231,7 @@ When performing a manual deployment via CLI, allow approximately **30–60 secon
 >You have 12 minutes after the cacheState transitions to VserverPeeringOfferSent to complete execution of the vserverPeeringCommand.
 ---
 
-### Step 5: Retrieve vServer Peering Command and Establish Vserver Peering 
+### Retrieve vServer Peering Command and Establish Vserver Peering 
 
 Retrieve (copy) the peering command via PS, and execute the vserver peering command on the on-premises cluster:
 
