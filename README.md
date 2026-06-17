@@ -326,8 +326,19 @@ The cache volume must be:
 2. **Recreated**
 
 ---
-
-### Remove a Cache Volume for a failed deployment
+### In the first instance list all cache volumes for a pool, and filter for cache and provisioning state
+- CacheState indicates the operational state of the cache volume.
+- ProvisioningState shows the ARM deployment status (e.g., Succeeded, Failed, Creating).
+- Both states, will shows as failed, if fully transitioned.
+  
+```powershell
+Get-AnfCache `
+  -ResourceGroupName $ResourceGroupName `
+  -AccountName $AccountName `
+  -PoolName $PoolName `
+| Select-Object Name, CacheState, ProvisioningState
+```
+### Secondly Remove a Cache Volume for a failed deployment
 
 ```powershell
 # Remove the existing cache volume
@@ -336,25 +347,14 @@ Remove-AzNetAppFilesCache `
   -AccountName "$AccountName" `
   -PoolName "$PoolName" `
   -Name "$CacheName"
----
 ```
+---
 ## Useful Reference Commands
 
-### Get all ANF cache volumes names for a pool
+### Get all ANF cache volumes 'names' for a pool
 
 ```powershell
  Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName -PoolName $PoolName | Select-Object Name 
-```
-### Check all cache volumes for a specific capacity pool for state and provisioning status
-- CacheState indicates the operational state of the cache volume.
-ProvisioningState shows the ARM deployment status (e.g., Succeeded, Failed, Creating).
-
-```powershell
-Get-AnfCache `
-  -ResourceGroupName $ResourceGroupName `
-  -AccountName $AccountName `
-  -PoolName $PoolName `
-| Select-Object Name, CacheState, ProvisioningState
 ```
 ### Get detailed cache information for a specific CacheName
 ```powershell
@@ -372,7 +372,7 @@ Update-AnfCache -ResourceGroupName $ResourceGroupName `
 Remove-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
   -AccountName "$AccountName" -PoolName "$PoolName" -Name "$CacheName"
 ```
- - *Note* After deleting the ANF cache volume, the cluster peering remains in place
+ - *Note* After deleting the ANF cache volume, the cluster peering remains in place.
 
 # Update throughput of a cache volume
 ```powershell
