@@ -310,6 +310,11 @@ New-PSDrive `
 
 ---
 
+## Cache Volume Recovery (Cluster Peering Timeout)
+
+- Create test files in the cache or on-premises vol
+---
+
 ## Useful Reference Commands
 
 ```powershell
