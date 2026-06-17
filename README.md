@@ -19,7 +19,7 @@ The minimum cache volume deployment is 50GiB which can scale up to 300TiB. For m
 - [Module: Az.NetAppFiles (New-AzNetAppFilesCache)](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-16.0.0)
 - [Considerations When creating the delegated subnet for Azure NetApp Files](https://learn.microsoft.com/en-us/azure/azure-netapp-files/azure-netapp-files-delegate-subnet)
 - [Physical and logical availability zones](https://learn.microsoft.com/en-gb/azure/reliability/availability-zones-overview?tabs=azure-powershell#physical-and-logical-availability-zones)
-- [How-to: Azure NetApp Files cache volumes -](https://www.youtube.com/watch?v=ajB3f13Weak)
+- [How-to: Azure NetApp Files cache volumes- YouTube](https://www.youtube.com/watch?v=ajB3f13Weak)
 
 
 ## Table of Contents
