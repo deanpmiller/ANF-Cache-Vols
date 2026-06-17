@@ -134,7 +134,7 @@ $params = @{
     CacheSubnetResourceId    = "/subscriptions/$subsId/resourceGroups/<network-resource-group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>"
     PeeringSubnetResourceId  = "/subscriptions/$subsId/resourceGroups/<network-resource-group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>"
 }
-# Variables used to poll CacheState until it reaches 'ClusterPeeringOfferSent' before proceeding.
+# Variables also used to query the status of the ANF Cache status, and obtain the peering passpharse and command.
 $ResourceGroupName = $params.ResourceGroupName
 $AccountName       = $params.AccountName
 $PoolName          = $params.PoolName
