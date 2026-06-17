@@ -188,8 +188,11 @@ do {
 Write-Host "Proceed to cluster peering"
 ```
 [!IMPORTANT]
-> You have 30 minutes after the cacheState transitions to ClusterPeeringOfferSent to execute the clusterPeeringCommand. If the cachestate is failed, the recovery action is to delete the cache volume.
-> Follow the link within the document to list failed cache volumes, and delete failed cache volumes. [Remove a Cache Volume for a failed deployment](#Remove a Cache Volume for a failed deployment) 
+> You have 30 minutes after the cacheState transitions to ClusterPeeringOfferSent to execute the clusterPeeringCommand.
+> If the cachestate is failed, the recovery action is to delete the cache volume.
+> 
+> Follow the link within the document to list failed cache volumes, and delete them:
+> [Remove a Cache Volume for a failed deployment](#remove-a-cache-volume-for-a-failed-deployment)
 ---
 
 
