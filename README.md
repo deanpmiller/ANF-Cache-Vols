@@ -19,6 +19,7 @@ The minimum cache volume deployment is 50GiB which can scale up to 300TiB. For m
 - [Module: Az.NetAppFiles (New-AzNetAppFilesCache)](https://learn.microsoft.com/en-us/powershell/module/az.netappfiles/new-aznetappfilescache?view=azps-16.0.0)
 - [Considerations When creating the delegated subnet for Azure NetApp Files](https://learn.microsoft.com/en-us/azure/azure-netapp-files/azure-netapp-files-delegate-subnet)
 - [Physical and logical availability zones](https://learn.microsoft.com/en-gb/azure/reliability/availability-zones-overview?tabs=azure-powershell#physical-and-logical-availability-zones)
+- [How-to: Azure NetApp Files cache volumes -](https://www.youtube.com/watch?v=ajB3f13Weak)
 
 
 ## Table of Contents
@@ -187,7 +188,8 @@ do {
 Write-Host "Proceed to cluster peering"
 ```
 [!IMPORTANT]
-> You have 30 minutes after the cacheState transitions to ClusterPeeringOfferSent to execute the clusterPeeringCommand.
+> You have 30 minutes after the cacheState transitions to ClusterPeeringOfferSent to execute the clusterPeeringCommand. If the cachestate is failed, the recovery action is to delete the cache volume.
+> Follow the link within the document to list failed cache volumes, and delete failed cache volumes. [Remove a Cache Volume for a failed deployment](#Remove a Cache Volume for a failed deployment) 
 ---
 
 
@@ -312,39 +314,72 @@ New-PSDrive `
 
 ## Cache Volume Recovery (Cluster Peering Timeout)
 
-- Create test files in the cache or on-premises vol
+If the cluster peering command is **not executed within 30 minutes**, the cache volume creation will fail and cannot be resumed.
+
+### Recovery Action
+
+The cache volume must be:
+1. **Deleted**
+2. **Recreated**
+
 ---
 
-## Useful Reference Commands
+### Remove a Cache Volume for a failed deployment
 
 ```powershell
-# Get all cache volume details
- Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName -PoolName $PoolName       
+# Remove the existing cache volume
+Remove-AzNetAppFilesCache `
+  -ResourceGroupName "$ResourceGroupName" `
+  -AccountName "$AccountName" `
+  -PoolName "$PoolName" `
+  -Name "$CacheName"
+---
+```
+## Useful Reference Commands
 
-# Get detailed cache information for a specific CacheName
+### Get all ANF cache volumes names for a pool
+
+```powershell
+ Get-AnfCache -ResourceGroupName $ResourceGroupName -AccountName $AccountName -PoolName $PoolName | Select-Object Name 
+```
+### Check all cache volumes for a specific capacity pool for state and provisioning status
+- CacheState indicates the operational state of the cache volume.
+ProvisioningState shows the ARM deployment status (e.g., Succeeded, Failed, Creating).
+
+```powershell
+Get-AnfCache `
+  -ResourceGroupName $ResourceGroupName `
+  -AccountName $AccountName `
+  -PoolName $PoolName `
+| Select-Object Name, CacheState, ProvisioningState
+```
+### Get detailed cache information for a specific CacheName
+```powershell
 Get-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
   -AccountName "$AccountName" -PoolName "$PoolName" -Name "$CacheName" |ConvertTo-JSON
-
+```
 # Remove cache (if needed)
-# In the first instance, disable **writeback** if enabled.
-
+-  In the first instance, disable **writeback** if enabled.
+```powershell
 Update-AnfCache -ResourceGroupName $ResourceGroupName `
 -AccountName $AccountName -PoolName $PoolName -name "$CacheName" -WriteBack Disabled
-
+```
 # You can then proceed to delete the ANFcache volume. 
+```powershell
 Remove-AzNetAppFilesCache -ResourceGroupName "$ResourceGroupName" `
   -AccountName "$AccountName" -PoolName "$PoolName" -Name "$CacheName"
-
-# *Note* After deleting the ANF cache volume, the cluster peering remains in place
+```
+ - *Note* After deleting the ANF cache volume, the cluster peering remains in place
 
 # Update throughput of a cache volume
+```powershell
 Update-AnfCache -ResourceGroupName $ResourceGroupName `
   -AccountName $AccountName -PoolName $PoolName -ThroughputMibps 2 -Name "$CacheName"  
-
+```
 # Update the size of a cache volume
+```powershell
 Update-AnfCache -ResourceGroupName $ResourceGroupName `
   -AccountName $AccountName -PoolName $PoolName -Size (200 * 1024 * 1024 * 1024) -Name "$CacheName"
-
 ```
 
 ---
