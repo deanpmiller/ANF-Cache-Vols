@@ -323,7 +323,6 @@ If the cluster peering command is **not executed within 30 minutes**, the cache 
 The cache volume must be:
 1. **Deleted**
 2. **Recreated**
-
 ---
 ### In the first instance list all cache volumes for a pool, and filter for cache and provisioning state
 - CacheState indicates the operational state of the cache volume.
