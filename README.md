@@ -50,9 +50,24 @@ Required to execute deployment and automation scripts.
 - **SSH access** to the on-premises ONTAP cluster with a relevant SSH account
 
 ### ONTAP Considerations
+
 - The source cluster must be running **ONTAP 9.15.1** or later version and ONTAP **9.15.1P5** to utilise Writeback.
-- Export policies must be configured on the source ONTAP volumes to allow **FlexCache connectivity** from Azure NetApp Files
+- Export policies **must** be configured on the source (origin) ONTAP volume to allow FlexCache connectivity from Azure NetApp Files.
+- Ensure Flexcache is enabled as an access protocol.
+  (../screenshots/flexcache_export.jpg)
   
+
+ ### Connectivity Requirements
+
+Connectivity between the on-premises ONTAP cluster and Azure NetApp Files must be **bidirectional** and include the following firewall rules:
+
+- **ICMP**
+- **TCP 11104**
+- **TCP 11105**
+- **HTTPS**
+
+Network connectivity must be established between **all intercluster (IC) LIFs on the source ONTAP cluster** and **all IC LIFs on the Azure NetApp Files endpoint**.
+
 ### Azure NetApp Files (ANF) Considerations
 - To use SMB, configure an **Active Directory (AD) connection** within the NetApp account and perform a domain join.
 - Ensure **DNS and AD DS integration** is in place prior to cache volume creation.
@@ -68,16 +83,7 @@ Required to execute deployment and automation scripts.
 - Ensure connectivity supports expected **RTT latency** requirements.
 - If compute and storage reside in **different subscriptions**, physical zone alignment must still be validated across subscriptions. For more information, refer to the [official documentation](#official-ms-learn-documentation).
 
-### Connectivity Requirements
 
-Connectivity between the on-premises ONTAP cluster and Azure NetApp Files must be **bidirectional** and include the following firewall rules:
-
-- **ICMP**
-- **TCP 11104**
-- **TCP 11105**
-- **HTTPS**
-
-Network connectivity must be established between **all intercluster (IC) LIFs on the source ONTAP cluster** and **all IC LIFs on the Azure NetApp Files endpoint**.
 
 ## Module Installation
 
