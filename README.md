@@ -56,7 +56,7 @@ Required to execute deployment and automation scripts.
 - Ensure Flexcache is enabled as an access protocol.
  ![FlexCache Export Policy](/screenshots/flexcache_export.jpg)
 
-[⚠️WARNING]
+[WARNING]
 > [Write-back mode](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements#write-back-considerations) introduces asynchronous persistence to the origin. The external origin **must** also remain less than **80% full.**
 > Ensure each external origin system node has at least 128 GB of RAM and 20 CPUs to absorb the write-back messages initiated by write-back enabled caches. This is the equivalent of an A400 or greater.
   
@@ -70,7 +70,7 @@ Connectivity between the on-premises ONTAP cluster and Azure NetApp Files must b
 - **TCP 11105**
 - **HTTPS**
 
-Network connectivity must be established between **all intercluster (IC) LIFs on the source ONTAP cluster** and **all IC LIFs on the Azure NetApp Files endpoint**.
+⚠️ Network connectivity must be established between **all intercluster (IC) LIFs on the source ONTAP cluster** and **all IC LIFs on the Azure NetApp Files endpoint**.
 
 ### Azure NetApp Files (ANF) Considerations
 - To use SMB, configure an **Active Directory (AD) connection** within the NetApp account and perform a domain join.
