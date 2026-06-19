@@ -54,7 +54,7 @@ Required to execute deployment and automation scripts.
 - The source cluster must be running **ONTAP 9.15.1** or later version and ONTAP **9.15.1P5** to utilise Writeback.
 - Export policies **must** be configured on the source (origin) ONTAP volume to allow FlexCache connectivity from Azure NetApp Files.
 - Ensure Flexcache is enabled as an access protocol.
-  (../screenshots/flexcache_export.jpg)
+ ![FlexCache Export Policy](../screenshots/flexcache_export.jpg)
   
 
  ### Connectivity Requirements
