@@ -85,7 +85,8 @@ Connectivity between the on-premises ONTAP cluster and Azure NetApp Files must b
 - You must create ExpressRoute or VPN resources to ensure network connectivity from the external NetApp ONTAP cluster to the target Azure NetApp Files cluster.
 - Validate required **firewall ports and NSG rules**.
 - Ensure connectivity supports expected **RTT latency** requirements.
-- If compute and storage reside in **different subscriptions**, physical zone alignment must still be validated across subscriptions. For more information, refer to the [official documentation](#official-ms-learn-documentation).
+- Allign ANF volumes to the same AZ as to where your compute is deployed.
+- If compute and storage reside in **different subscriptions**, physical zone alignment must still be validated across subscriptions.  To understand the mapping between logical and physical zones for your subscription, follow [here].(https://learn.microsoft.com/en-gb/azure/reliability/availability-zones-overview?tabs=azure-powershell#physical-and-logical-availability-zones)
 
 
 
