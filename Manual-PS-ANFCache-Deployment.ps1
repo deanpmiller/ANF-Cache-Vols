@@ -23,7 +23,7 @@ $params = @{
     AccountName             = "<ANF_ACCOUNT_NAME>"         # e.g. anf-west-europe
     PoolName                = "<CAPACITY_POOL_NAME>"       # e.g. Flexcache
     Zone                    = "1"                          # Availability Zone
-    Size                    = (50 * 1024 * 1024 * 1024)    # Cache size in bytes
+    Size                    = (50 * 1024 * 1024 * 1024)    # Cache size in bytes.  # Cache size in bytes. Example uses 50 GiB. For 1 TiB, use (1024 * 1024 * 1024 * 1024).
     ProtocolType            = "SMB"
     WriteBack               = "Enabled"
     
