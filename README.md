@@ -70,7 +70,8 @@ Connectivity between the on-premises ONTAP cluster and Azure NetApp Files must b
 - **TCP 11105**
 - **HTTPS**
 
-⚠️ Network connectivity must be established between **all intercluster (IC) LIFs on the source ONTAP cluster** and **all IC LIFs on the Azure NetApp Files endpoint**.
+[WARNING] 
+> Network connectivity must be established between **all intercluster (IC) LIFs on the source ONTAP cluster** and **all IC LIFs on the Azure NetApp Files endpoint**.
 
 ### Azure NetApp Files (ANF) Considerations
 - To use SMB, configure an **Active Directory (AD) connection** within the NetApp account and perform a domain join.
