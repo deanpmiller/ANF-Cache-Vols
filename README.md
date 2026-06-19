@@ -55,6 +55,9 @@ Required to execute deployment and automation scripts.
 - Export policies **must** be configured on the source (origin) ONTAP volume to allow FlexCache connectivity from Azure NetApp Files.
 - Ensure Flexcache is enabled as an access protocol.
  ![FlexCache Export Policy](/screenshots/flexcache_export.jpg)
+[!WARNING]
+> [Write-back mode](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements#write-back-considerations) introduces asynchronous persistence to the origin. The external origin **must** also remain less than **80% full.**
+> Each external origin system node has at least 128 GB of RAM and 20 CPUs to absorb the write-back messages initiated by write-back enabled caches. This is the equivalent of an A400 or greater.
   
 
  ### Connectivity Requirements
@@ -169,9 +172,7 @@ Start-Job -ScriptBlock {
     New-AzNetAppFilesCache @params
 } -ArgumentList $params | Out-Null
 ```
-[!WARNING]
-> [Write-back mode](https://learn.microsoft.com/en-us/azure/azure-netapp-files/cache-requirements#write-back-considerations) introduces asynchronous persistence to the origin. The external origin **must** also remain less than **80% full.**
-> Each external origin system node has at least 128 GB of RAM and 20 CPUs to absorb the write-back messages initiated by write-back enabled caches. This is the equivalent of an A400 or greater.
+
 ---
 
 ### Step 2: Monitor Cache Creation
